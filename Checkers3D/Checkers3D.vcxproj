@@ -107,12 +107,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)../External libs/GLEW/include;$(SolutionDir)../External libs/GLFW/include;$(SolutionDir)../External libs/GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/GLEW/include;$(SolutionDir)ThirdParty/GLFW/include;$(SolutionDir)ThirdParty/GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)../External libs/GLEW/lib/Release/Win32;$(SolutionDir)../External libs/GLFW/lib-vc2015;$(SolutionDir)../External libs/GLEW/bin/Release/Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty/GLEW/lib/Release/Win32;$(SolutionDir)ThirdParty/GLFW/lib-vc2015;$(SolutionDir)ThirdParty/GLEW/bin/Release/Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
