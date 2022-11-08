@@ -22,7 +22,8 @@ void Gameplay::KeyControl(bool* keys)
 		}
 		else if (checkerboard.chosenPieceIndex != -1 && CheckIfCorrect()) //jezeli jakas bierka jest wybrana i ruch jest poprawny
 		{
-			checkerboard.Move();
+			checkerboard.Move(&checkerboard.playerPieces[checkerboard.chosenPieceIndex], &checkerboard.blackSquares[checkerboard.activeSquareIndex]);
+			checkerboard.ComputerMove();
 		}
 
 		keys[GLFW_KEY_ENTER] = false;
@@ -85,7 +86,7 @@ bool Gameplay::CheckIfCorrect()
 {
 	if (checkerboard.blackSquares[checkerboard.activeSquareIndex].playerPieceIndex != -1 || checkerboard.blackSquares[checkerboard.activeSquareIndex].opponentPieceIndex != -1)
 	{
-		return false; //zwroc false jesli na wybranym do ruchu polu stoi jakas (biala lub czarna) bierka
+		return false; //zwroc false jesli na wybranym do ruchu polu stoi jakas bierka
 	}
 	return true;
 }

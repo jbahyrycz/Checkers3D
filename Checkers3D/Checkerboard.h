@@ -21,7 +21,9 @@ public:
 
 	void SetCheckerboard(bool white);
 
+	void PlayerMove();
 	void Move();
+	void Move(Piece* piece, Square* square);
 
 	void Take(Piece* piece);
 
@@ -44,12 +46,12 @@ public:
 	Piece* GetPlayerPieces() { return playerPieces; }
 	Piece* GetOpponentPieces() { return opponentPieces; }
 
-
 	~Checkerboard();
 
 private:
 	int activeSquareIndex;
 	int chosenPieceIndex;
+
 	Square whiteSquares[32];
 	Square blackSquares[32];
 	Piece playerPieces[12];

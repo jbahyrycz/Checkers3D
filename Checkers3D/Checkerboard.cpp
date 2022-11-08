@@ -5,6 +5,7 @@ Checkerboard::Checkerboard()
 	srand(time(NULL)); //wlaczenie losowosci
 
 	blackSquares[0].ChangeActive();
+
 	activeSquareIndex = 0;
 	chosenPieceIndex = -1;
 }
@@ -113,6 +114,25 @@ void Checkerboard::Move()
 	ComputerMove();
 }
 
+void Checkerboard::PlayerMove()
+{
+	//Move(&playerPieces[chosenPieceIndex], &blackSquares[activeSquareIndex]);
+
+	return;
+}
+
+void Checkerboard::Move(Piece* piece, Square* square)
+{
+	piece->ChangePosition(square->posX, 0.6f, square->posZ); //zmiana wspolrzednych bierki
+
+	blackSquares[piece->squareIndex].playerPieceIndex = -1; //zwalnianie poprzednio zajmowanego pola
+	piece->squareIndex = activeSquareIndex; //przypisywanie pola do bierki
+	square->playerPieceIndex = chosenPieceIndex; //przypisywanie bierki do pola
+
+	piece->ChangeChosen(); //po ruchu wybrana bierka przestaje byc wybrana
+	chosenPieceIndex = -1; //po ruchu indeks wybranej bierki zmienia sie na -1
+}
+
 void Checkerboard::Promote(Piece* piece)
 {
 	piece->promoted = true;
@@ -186,6 +206,8 @@ void Checkerboard::ComputerMove()
 		blackSquares[opponentPieces[pieceIndex].squareIndex].opponentPieceIndex = -1; //na poprzednim polu nie ma juz czarnej bierki
 		opponentPieces[pieceIndex].squareIndex = squareIndex; //do bierki przypisujemy nowe pole
 		blackSquares[squareIndex].opponentPieceIndex = pieceIndex; //do pola przypisujemy nowa bierke
+
+		//Move(&opponentPieces[pieceIndex], &blackSquares[squareIndex]);
 	}
 	else
 	{

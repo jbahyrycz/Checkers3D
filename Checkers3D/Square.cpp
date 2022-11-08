@@ -1,4 +1,5 @@
 #include "Square.h"
+#include <iostream>
 
 Square::Square()
 {
@@ -7,8 +8,7 @@ Square::Square()
 	posZ = 0.0f;
 
 	active = false;
-	whitePieceIndex = -1;
-	blackPieceIndex = -1;
+
 	playerPieceIndex = -1;
 	opponentPieceIndex = -1;
 }
