@@ -232,14 +232,7 @@ void DisplayGameplay(glm::mat4 projection)
 		model = glm::translate(model, glm::vec3(gameplay.GetCheckerboard().GetOpponentPieces()[i].GetPosX(), gameplay.GetCheckerboard().GetOpponentPieces()[i].GetPosY(), gameplay.GetCheckerboard().GetOpponentPieces()[i].GetPosZ()));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
-		if (gameplay.GetCheckerboard().GetOpponentPieces()[i].GetChosen())
-		{
-			whiteSquareWoodTexture.UseTexture();
-		}
-		else
-		{
-			opponentPieceTexture.UseTexture();
-		}
+		opponentPieceTexture.UseTexture();
 		if (gameplay.GetCheckerboard().GetOpponentPieces()[i].GetPromoted())
 		{
 			meshList[2]->RenderMesh();

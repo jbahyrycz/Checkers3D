@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Checkerboard.h"
+#include <ctime>
 
 class Gameplay
 {
@@ -17,9 +18,21 @@ public:
 
 	bool CheckIfFinished(); //bedzie sprawdzac czy gra zakonczona
 
+	void ChangeActiveLeft();
+	void ChangeActiveRight();
+	void ChangeActiveUp();
+	void ChangeActiveDown();
+
+	int GetActiveSquareIndex() { return activeSquareIndex; }
+
+	void ChangeChosen();
+	void CalculateMove();
+
 	~Gameplay();
 
 private:
+	int activeSquareIndex;
+	int chosenPieceIndex;
 	Checkerboard checkerboard;
 	bool white;
 };

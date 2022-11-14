@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <iostream>
 #include <cstdlib>
-#include <ctime>
 
 #include <GLFW\glfw3.h>
 
@@ -21,25 +20,12 @@ public:
 
 	void SetCheckerboard(bool white);
 
-	void PlayerMove();
-	void Move();
-	void Move(Piece* piece, Square* square);
+	void PlayerMove(Piece* piece, Square* square, int activeSquareIndex, int chosenPieceIndex);
+	void OpponentMove(int pieceIndex, int squareIndex);
 
 	void Take(Piece* piece);
 
 	void Promote(Piece* piece);
-
-	void ChangeChosen();
-
-	void ChangeActiveLeft();
-	void ChangeActiveRight();
-	void ChangeActiveUp();
-	void ChangeActiveDown();
-
-	void ComputerMove();
-
-	int GetActiveSquareIndex() { return activeSquareIndex; }
-	int GetChosenPieceIndex() { return chosenPieceIndex; }
 
 	Square* GetWhiteSquares() { return whiteSquares; }
 	Square* GetBlackSquares() { return blackSquares; }
@@ -49,9 +35,6 @@ public:
 	~Checkerboard();
 
 private:
-	int activeSquareIndex;
-	int chosenPieceIndex;
-
 	Square whiteSquares[32];
 	Square blackSquares[32];
 	Piece playerPieces[12];

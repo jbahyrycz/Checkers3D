@@ -19,11 +19,6 @@ void Piece::ChangePosition(float x, float y, float z)
 	posZ = z;
 }
 
-void Piece::ChangeChosen()
-{
-	chosen = !chosen;
-}
-
 Piece::~Piece()
 {
 

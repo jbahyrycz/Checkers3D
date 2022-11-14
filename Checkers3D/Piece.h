@@ -33,7 +33,5 @@ private:
 	int squareIndex;
 
 	void ChangePosition(float x, float y, float z);
-
-	void ChangeChosen();
 };
 
