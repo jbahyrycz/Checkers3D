@@ -1,5 +1,5 @@
 # Checkers3D
 
-## University course project
+## The final project for Software Engineering subject at 3rd semester of my university course
 
-The project supports x86 Windows architecture
+Supports x86 Windows architecture - make sure to set your environment adequately
