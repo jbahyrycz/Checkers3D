@@ -30,11 +30,8 @@ std::vector<Shader> shaderList;
 
 Camera mainCamera;
 
-Texture stoneTexture;
-Texture checkerboardTexture;
 Texture plainRedTexture;
 Texture plainBrownTexture;
-Texture plainWhiteTexture;
 Texture plainPinkTexture;
 Texture boardWoodTexture;
 Texture blackSquareWoodTexture;
@@ -171,16 +168,10 @@ void CreateShaders()
 
 void SetTextures()
 {
-	stoneTexture = Texture("Textures/stone.png");
-	stoneTexture.LoadTexture();
-	checkerboardTexture = Texture("Textures/checkerboard.png");
-	checkerboardTexture.LoadTexture();
 	plainRedTexture = Texture("Textures/plainRed.png");
 	plainRedTexture.LoadTexture();
 	plainBrownTexture = Texture("Textures/plainBrown.png");
 	plainBrownTexture.LoadTexture();
-	plainWhiteTexture = Texture("Textures/plainWhite.png");
-	plainWhiteTexture.LoadTexture();
 	plainPinkTexture = Texture("Textures/plainPink.png");
 	plainPinkTexture.LoadTexture();
 	boardWoodTexture = Texture("Textures/boardWood.png");
@@ -191,15 +182,13 @@ void SetTextures()
 	whiteSquareWoodTexture.LoadTexture();
 }
 
-void DisplayGameplay(glm::mat4 projection)
+void DisplayGameplay()
 {
 	// board
 
 	glm::mat4 model(1.0f);
 
 	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-	glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
-	glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(mainCamera.CalculateViewMatrix()));
 	boardWoodTexture.UseTexture();
 	meshList[0]->RenderMesh();
 
@@ -210,7 +199,6 @@ void DisplayGameplay(glm::mat4 projection)
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(gameplay.GetCheckerboard().GetPlayerPieces()[i].GetPosX(), gameplay.GetCheckerboard().GetPlayerPieces()[i].GetPosY(), gameplay.GetCheckerboard().GetPlayerPieces()[i].GetPosZ()));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 		if (gameplay.GetCheckerboard().GetPlayerPieces()[i].GetChosen())
 		{
 			whiteSquareWoodTexture.UseTexture();
@@ -231,7 +219,6 @@ void DisplayGameplay(glm::mat4 projection)
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(gameplay.GetCheckerboard().GetOpponentPieces()[i].GetPosX(), gameplay.GetCheckerboard().GetOpponentPieces()[i].GetPosY(), gameplay.GetCheckerboard().GetOpponentPieces()[i].GetPosZ()));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 		opponentPieceTexture.UseTexture();
 		if (gameplay.GetCheckerboard().GetOpponentPieces()[i].GetPromoted())
 		{
@@ -250,7 +237,6 @@ void DisplayGameplay(glm::mat4 projection)
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(gameplay.GetCheckerboard().GetBlackSquares()[i].GetPosX(), 0.5f, gameplay.GetCheckerboard().GetBlackSquares()[i].GetPosZ()));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 		if (gameplay.GetCheckerboard().GetBlackSquares()[i].GetActive())
 		{
 			plainPinkTexture.UseTexture();
@@ -264,15 +250,36 @@ void DisplayGameplay(glm::mat4 projection)
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(gameplay.GetCheckerboard().GetWhiteSquares()[i].GetPosX(), 0.5f, gameplay.GetCheckerboard().GetWhiteSquares()[i].GetPosZ()));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 		whiteSquareWoodTexture.UseTexture();
 		meshList[3]->RenderMesh();
 	}
 }
 
+void DisplayMenu()
+{
+
+}
+
+void RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
+{
+	shaderList[0].UseShader();
+	uniformModel = shaderList[0].GetModelLocation();
+	uniformProjection = shaderList[0].GetProjectionLocation();
+	uniformView = shaderList[0].GetViewLocation();
+
+	glViewport(0, 0, 1366, 768);
+
+	// Clear the window
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+	glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(viewMatrix));
+}
+
 int main()
 {
-	mainWindow = Window(1200, 900);
+	mainWindow = Window(1366, 768);
 	mainWindow.Initialize();
 
 	CreateObjects();
@@ -282,7 +289,7 @@ int main()
 
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (GLfloat)mainWindow.GetBufferWidth() / mainWindow.GetBufferHeight(), 0.1f, 100.0f);
 
-	white = false;
+	white = true;
 	if (white)
 	{
 		mainCamera = Camera(glm::vec3(0.0f, 7.0f, 11.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, -32.0f, 5.0f, 0.5f);
@@ -319,15 +326,9 @@ int main()
 
 		gameplay.KeyControl(mainWindow.GetKeys());
 
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		shaderList[0].UseShader();
-		uniformModel = shaderList[0].GetModelLocation();
-		uniformProjection = shaderList[0].GetProjectionLocation();
-		uniformView = shaderList[0].GetViewLocation();
-
-		DisplayGameplay(projection);
+		glm::mat4 viewMatrix = mainCamera.CalculateViewMatrix();
+		RenderPass(projection, viewMatrix);
+		DisplayGameplay();
 
 		glUseProgram(0);
 
