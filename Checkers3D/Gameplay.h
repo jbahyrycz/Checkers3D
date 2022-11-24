@@ -1,39 +1,55 @@
 #pragma once
 
-#include "Checkerboard.h"
 #include <ctime>
+#include <vector>
+
+#include <glm\glm.hpp>
+#include <glm\gtc\matrix_transform.hpp>
+#include <glm\gtc\type_ptr.hpp>
+
+#include "Mesh.h"
+#include "Camera.h"
+#include "Texture.h"
+#include "Checkerboard.h"
 
 class Gameplay
 {
 public:
 	Gameplay();
 
-	Gameplay(bool white);
-
-	Checkerboard GetCheckerboard() { return checkerboard; }
-
+	void CreateObjects();
+	void LoadTextures();
+	void DisplayGameplay(GLuint uniformModel);
 	void KeyControl(bool* keys);
 
-	bool CheckIfCorrect(); //bedzie sprawdzac czy ruch, ktory uzytkownik chce wykonac jest zgodny z zasadami
-
-	bool CheckIfFinished(); //bedzie sprawdzac czy gra zakonczona
-
+	void CalculateMove();
+	void ChangeChosen();
 	void ChangeActiveLeft();
 	void ChangeActiveRight();
 	void ChangeActiveUp();
 	void ChangeActiveDown();
 
-	int GetActiveSquareIndex() { return activeSquareIndex; }
-
-	void ChangeChosen();
-	void CalculateMove();
+	Camera GetCamera() { return camera; };
 
 	~Gameplay();
 
 private:
-	int activeSquareIndex;
-	int chosenPieceIndex;
+	Camera camera;
+
+	std::vector<Mesh*> meshList;
+
+	Texture playerTexture;
+	Texture opponentTexture;
+	Texture whiteSquareTexture;
+	Texture blackSquareTexture;
+	Texture boardTexture;
+	Texture activeSquareTexture;
+
 	Checkerboard checkerboard;
+
+	unsigned int activeSquareIndex;
+	unsigned int chosenPieceIndex;
+
 	bool white;
 };
 

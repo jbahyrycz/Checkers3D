@@ -17,20 +17,13 @@ public:
 	friend class Gameplay;
 
 	Checkerboard();
+	Checkerboard(bool white);
 
-	void SetCheckerboard(bool white);
+	void MovePlayerPiece(int pieceIndex, int squareIndex);
+	void MoveOpponentPiece(int pieceIndex, int squareIndex);
 
-	void PlayerMove(Piece* piece, Square* square, int activeSquareIndex, int chosenPieceIndex);
-	void OpponentMove(int pieceIndex, int squareIndex);
-
-	void Take(Piece* piece);
-
+	void Capture(Piece* piece);
 	void Promote(Piece* piece);
-
-	Square* GetWhiteSquares() { return whiteSquares; }
-	Square* GetBlackSquares() { return blackSquares; }
-	Piece* GetPlayerPieces() { return playerPieces; }
-	Piece* GetOpponentPieces() { return opponentPieces; }
 
 	~Checkerboard();
 

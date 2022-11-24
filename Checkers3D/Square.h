@@ -1,6 +1,5 @@
 #pragma once
 
-class Piece;
 class Checkerboard;
 class Gameplay;
 
@@ -11,25 +10,18 @@ public:
 	friend class Gameplay;
 
 	Square();
-
-	float GetPosX() { return posX; }
-	float GetPosZ() { return posZ; }
-	bool GetActive() { return active; }
-
 	~Square();
 
 private:
+	void SetPosition(float x, float z);
+
 	float posX;
 	float posY;
 	float posZ;
 
-	bool active;
-
 	int playerPieceIndex;
 	int opponentPieceIndex;
 
-	void SetPosition(float x, float z);
-
-	void ChangeActive();
+	bool active;
 };
 

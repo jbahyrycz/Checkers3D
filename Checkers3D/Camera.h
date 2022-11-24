@@ -11,10 +11,7 @@ class Camera
 {
 public:
 	Camera();
-	Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLfloat startPitch, GLfloat startMoveSpeed, GLfloat startTurnSpeed);
-
-	void KeyControl(bool* keys, GLfloat deltaTime);
-	void MouseControl(GLfloat xChange, GLfloat yChange);
+	Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLfloat startPitch);
 
 	glm::vec3 GetCameraPosition();
 	glm::vec3 GetCameraDirection();
@@ -32,9 +29,6 @@ private:
 
 	GLfloat yaw;
 	GLfloat pitch;
-
-	GLfloat moveSpeed;
-	GLfloat turnSpeed;
 
 	void Update();
 };

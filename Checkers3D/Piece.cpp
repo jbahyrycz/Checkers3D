@@ -3,13 +3,17 @@
 Piece::Piece()
 {
 	posX = 0.0f;
-	posY = 0.0f;
+	posY = 0.6f;
 	posZ = 0.0f;
+
+	squareIndex = -1;
 
 	chosen = false;
 	promoted = false;
-	taken = false;
-	squareIndex = -1;
+	captured = false;
+
+	finalPosX = 0.0f;
+	finalPosZ = 0.0f;
 }
 
 void Piece::ChangePosition(float x, float y, float z)
