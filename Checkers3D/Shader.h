@@ -10,6 +10,8 @@
 #include <glm\glm.hpp>
 #include <glm\gtc\type_ptr.hpp>
 
+#include "PointLight.h"
+
 class Shader
 {
 public:
@@ -20,9 +22,14 @@ public:
 
 	std::string ReadFile(const char* fileLocation);
 
-	GLuint GetProjectionLocation();
-	GLuint GetModelLocation();
-	GLuint GetViewLocation();
+	GLuint GetProjectionLocation() { return uniformProjection; }
+	GLuint GetModelLocation() { return uniformModel; }
+	GLuint GetViewLocation() { return uniformView; }
+	GLuint GetEyePositionLocation() { return uniformEyePosition; }
+	GLuint GetSpecularIntensityLocation() { return uniformSpecularIntensity; }
+	GLuint GetShininessLocation() { return uniformShininess; }
+
+	void SetPointLight(PointLight* pLight);
 
 	void UseShader();
 	void ClearShader();
@@ -30,10 +37,21 @@ public:
 	~Shader();
 
 private:
-	int pointLightCount;
-	int spotLightCount;
 
-	GLuint shaderID, uniformModel, uniformProjection, uniformView;
+	GLuint shaderID, uniformModel, uniformProjection, uniformView, uniformEyePosition,
+		uniformSpecularIntensity, uniformShininess, uniformTexture;
+
+	struct
+	{
+		GLuint uniformColor;
+		GLuint uniformAmbientIntensity;
+		GLuint uniformDiffuseIntensity;
+
+		GLuint uniformPosition;
+		GLuint uniformConstant;
+		GLuint uniformLinear;
+		GLuint uniformExponent;
+	} uniformPointLight;
 
 	void CompileShader(const char* vertexCode, const char* fragmentCode);
 	void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType);

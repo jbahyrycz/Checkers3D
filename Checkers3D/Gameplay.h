@@ -12,6 +12,8 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Texture.h"
+#include "Material.h"
+#include "PointLight.h"
 #include "Checkerboard.h"
 
 class Gameplay
@@ -21,6 +23,7 @@ public:
 
 	void Run();
 
+	void CalcAverageNormals(unsigned int* indices, unsigned int indicesCount, GLfloat* vertices, unsigned int verticesCount, unsigned int vLength, unsigned int normalOffset);
 	void CreateObjects();
 	void CreateShaders();
 	void RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix);
@@ -41,17 +44,10 @@ private:
 	Window* windowPtr;
 	unsigned int* nPtr;
 
-	Camera camera;
-
-	GLuint uniformProjection;
-	GLuint uniformModel;
-	GLuint uniformView;
-
 	std::vector<Mesh*> meshList;
 	std::vector<Shader> shaderList;
 
-	static const char* vShader;
-	static const char* fShader;
+	Camera camera;
 
 	Texture playerTexture;
 	Texture opponentTexture;
@@ -59,6 +55,21 @@ private:
 	Texture blackSquareTexture;
 	Texture boardTexture;
 	Texture activeSquareTexture;
+
+	GLuint uniformProjection;
+	GLuint uniformModel;
+	GLuint uniformView;
+	GLuint uniformEyePosition;
+	GLuint uniformSpecularIntensity;
+	GLuint uniformShininess;
+
+	Material shinyMaterial;
+	Material dullMaterial;
+
+	PointLight light;
+
+	static const char* vShader;
+	static const char* fShader;
 
 	Checkerboard checkerboard;
 

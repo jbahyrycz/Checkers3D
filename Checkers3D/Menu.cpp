@@ -42,14 +42,14 @@ void Menu::CreateObjects()
 	};
 
 	GLfloat buttonVertices[] = {
-			-4.0f, -1.5f, -1.0f,		0.0f, 1.0f,
-			4.0f, -1.5f, -1.0f,			1.0f, 1.0f,
-			-4.0f, 1.5f, -1.0f,			0.0f, 0.0f,
-			4.0f, 1.5f, -1.0f,			1.0f, 0.0f
+			-4.0f, -1.5f, -1.0f,		0.0f, 1.0f,		0.0f, 0.0f, 0.0f,
+			4.0f, -1.5f, -1.0f,			1.0f, 1.0f,		0.0f, 0.0f, 0.0f,
+			-4.0f, 1.5f, -1.0f,			0.0f, 0.0f,		0.0f, 0.0f, 0.0f,
+			4.0f, 1.5f, -1.0f,			1.0f, 0.0f,		0.0f, 0.0f, 0.0f
 	};
 
 	Mesh* button = new Mesh();
-	button->CreateMesh(buttonVertices, buttonIndices, 20, 6);
+	button->CreateMesh(buttonVertices, buttonIndices, 32, 6);
 	meshList.push_back(button);
 }
 

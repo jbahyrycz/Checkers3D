@@ -44,6 +44,13 @@ std::string Shader::ReadFile(const char* fileLocation)
 	return content;
 }
 
+void Shader::SetPointLight(PointLight* pLight)
+{
+	pLight->UseLight(uniformPointLight.uniformAmbientIntensity, uniformPointLight.uniformColor,
+		uniformPointLight.uniformDiffuseIntensity, uniformPointLight.uniformPosition,
+		uniformPointLight.uniformConstant, uniformPointLight.uniformLinear, uniformPointLight.uniformExponent);
+}
+
 void Shader::CompileShader(const char* vertexCode, const char* fragmentCode)
 {
 	shaderID = glCreateProgram();
@@ -81,21 +88,19 @@ void Shader::CompileShader(const char* vertexCode, const char* fragmentCode)
 	uniformProjection = glGetUniformLocation(shaderID, "projection");
 	uniformModel = glGetUniformLocation(shaderID, "model");
 	uniformView = glGetUniformLocation(shaderID, "view");
-}
+	uniformEyePosition = glGetUniformLocation(shaderID, "eyePosition");
+	uniformSpecularIntensity = glGetUniformLocation(shaderID, "material.specularIntensity");
+	uniformShininess = glGetUniformLocation(shaderID, "material.shininess");
+	
+	uniformPointLight.uniformColor = glGetUniformLocation(shaderID, "pointLight.color");
+	uniformPointLight.uniformAmbientIntensity = glGetUniformLocation(shaderID, "pointLight.ambientIntensity");
+	uniformPointLight.uniformDiffuseIntensity = glGetUniformLocation(shaderID, "pointLight.diffuseIntensity");
+	uniformPointLight.uniformPosition = glGetUniformLocation(shaderID, "pointLight.position");
+	uniformPointLight.uniformConstant = glGetUniformLocation(shaderID, "pointLight.constant");
+	uniformPointLight.uniformLinear = glGetUniformLocation(shaderID, "pointLight.linear");
+	uniformPointLight.uniformExponent = glGetUniformLocation(shaderID, "pointLight.exponent");
 
-GLuint Shader::GetProjectionLocation()
-{
-	return uniformProjection;
-}
-
-GLuint Shader::GetModelLocation()
-{
-	return uniformModel;
-}
-
-GLuint Shader::GetViewLocation()
-{
-	return uniformView;
+	uniformTexture = glGetUniformLocation(shaderID, "theTexture");
 }
 
 void Shader::UseShader()
