@@ -137,6 +137,7 @@
     <ClCompile Include="Checkerboard.cpp" />
     <ClCompile Include="Gameplay.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Checkerboard.h" />
     <ClInclude Include="Gameplay.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Piece.h" />
     <ClInclude Include="Shader.h" />

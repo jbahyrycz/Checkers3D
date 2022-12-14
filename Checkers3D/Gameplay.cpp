@@ -1,10 +1,22 @@
 ﻿#include "Gameplay.h"
 
-Gameplay::Gameplay()
+const char* Gameplay::vShader = "Shaders/shaderGameplay.vert";
+const char* Gameplay::fShader = "Shaders/shaderGameplay.frag";
+
+Gameplay::Gameplay(Window* window, unsigned int* n)
 {
 	srand(time(NULL)); //wlaczenie losowosci
 
+	windowPtr = window;
+	nPtr = n;
+
+	uniformProjection = 0;
+	uniformModel = 0;
+	uniformView = 0;
+
 	white = (std::rand() % 2);
+
+	gameplayShouldClose = false;
 
 	checkerboard = Checkerboard(white);
 	chosenPieceIndex = 0;
@@ -34,6 +46,50 @@ Gameplay::Gameplay()
 	activeSquareTexture = Texture("Textures/plainPink.png");
 
 	checkerboard.blackSquares[activeSquareIndex].active = true;
+}
+
+void Gameplay::Run()
+{
+	CreateObjects();
+	CreateShaders();
+	glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), (GLfloat)windowPtr->GetBufferWidth() / windowPtr->GetBufferHeight(), 0.1f, 100.0f);
+	LoadTextures();
+
+	while (!gameplayShouldClose && !windowPtr->GetShouldClose())
+	{
+		glfwPollEvents();
+		KeyControl(windowPtr->GetKeys());
+		glm::mat4 viewMatrix = camera.CalculateViewMatrix();
+		RenderPass(projectionMatrix, viewMatrix);
+		DisplayGameplay(uniformModel);
+
+		glUseProgram(0);
+		windowPtr->SwapBuffers();
+	}
+}
+
+void Gameplay::CreateShaders()
+{
+	Shader* shader1 = new Shader();
+	shader1->CreateFromFiles(vShader, fShader);
+	shaderList.push_back(*shader1);
+}
+
+void Gameplay::RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
+{
+	shaderList[0].UseShader();
+	uniformModel = shaderList[0].GetModelLocation();
+	uniformProjection = shaderList[0].GetProjectionLocation();
+	uniformView = shaderList[0].GetViewLocation();
+
+	glViewport(0, 0, 1200, 900);
+
+	// Clear the window
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+	glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 }
 
 void Gameplay::CreateObjects()
@@ -231,6 +287,13 @@ void Gameplay::DisplayGameplay(GLuint uniformModel)
 
 void Gameplay::KeyControl(bool* keys)
 {
+	if (keys[GLFW_KEY_ESCAPE])
+	{
+		gameplayShouldClose = true;
+		*nPtr = 0;
+
+		keys[GLFW_KEY_ESCAPE] = false;
+	}
 	if (keys[GLFW_KEY_ENTER])
 	{
 		if (checkerboard.blackSquares[activeSquareIndex].playerPieceIndex != -1) //jezeli do pola jest przypisana bierka gracza

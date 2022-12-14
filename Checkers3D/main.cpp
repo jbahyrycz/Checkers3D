@@ -21,6 +21,7 @@
 #include "Piece.h"
 #include "Checkerboard.h"
 #include "Gameplay.h"
+#include "Menu.h"
 
 class App
 {
@@ -28,90 +29,45 @@ public:
 	App() 
 	{
 		mainWindow = Window(1200, 900);
-
-		uniformProjection = 0;
-		uniformModel = 0;
-		uniformView = 0;
 	}
 
 	void Run()
 	{
 		mainWindow.Initialize();
 
-		gameplay.CreateObjects();
-		CreateShaders();
-
-		glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), (GLfloat)mainWindow.GetBufferWidth() / mainWindow.GetBufferHeight(), 0.1f, 100.0f);
-
-		gameplay.LoadTextures();
+		unsigned int n = 0;
 
 		while (!mainWindow.GetShouldClose())
 		{
-			glfwPollEvents();
-
-			gameplay.KeyControl(mainWindow.GetKeys());
-
-			glm::mat4 viewMatrix = gameplay.GetCamera().CalculateViewMatrix();
-			RenderPass(projectionMatrix, viewMatrix);
-			gameplay.DisplayGameplay(uniformModel);
-
-			glUseProgram(0);
-
-			mainWindow.SwapBuffers();
+			if (n == 0)
+			{
+				Menu* menu = new Menu(&mainWindow, &n);
+				menu->Run();
+				delete menu;
+			}
+			if (n == 1)
+			{
+				Gameplay* gameplay = new Gameplay(&mainWindow, &n);
+				gameplay->Run();
+				delete gameplay;
+			}
+			if (n > 1)
+			{
+				break;
+			}
 		}
 	}
 
 	~App() {}
 
 private:
-	GLuint uniformProjection;
-	GLuint uniformModel; 
-	GLuint uniformView;
-
 	Window mainWindow;
-	std::vector<Shader> shaderList;
-
-	static const char* vShader;
-	static const char* fShader;
-
-	Gameplay gameplay;
-
-	bool white = true;
-
-	void CreateShaders()
-	{
-		Shader* shader1 = new Shader();
-		shader1->CreateFromFiles(vShader, fShader);
-		shaderList.push_back(*shader1);
-	}
-
-	void RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
-	{
-		shaderList[0].UseShader();
-		uniformModel = shaderList[0].GetModelLocation();
-		uniformProjection = shaderList[0].GetProjectionLocation();
-		uniformView = shaderList[0].GetViewLocation();
-
-		glViewport(0, 0, 1200, 900);
-
-		// Clear the window
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
-		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(viewMatrix));
-	}
 };
-
-const char* App::vShader = "Shaders/shader.vert";
-const char* App::fShader = "Shaders/shader.frag";
 
 int main()
 {
 	App* app = new App;
-
 	app->Run();
-
 	delete app;
 
 	return 0;
