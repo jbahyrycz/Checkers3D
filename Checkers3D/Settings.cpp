@@ -176,13 +176,13 @@ void Settings::KeyControl(bool* keys)
 		
 		keys[GLFW_KEY_ESCAPE] = false;
 	}
-	if (keys[GLFW_KEY_UP] && *nPtr > 1)
+	if (keys[GLFW_KEY_UP] && *nPtr > 0)
 	{
 		*nPtr -= 1;
 
 		keys[GLFW_KEY_UP] = false;
 	}
-	if (keys[GLFW_KEY_DOWN] && *nPtr < 3)
+	if (keys[GLFW_KEY_DOWN] && *nPtr < 2)
 	{
 		*nPtr += 1;
 

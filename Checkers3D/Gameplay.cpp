@@ -39,7 +39,7 @@ Gameplay::Gameplay(Window* window, unsigned int* n, unsigned int color)
 		whiteSquareTextureLoc = "Textures/whiteSquareWood.jpg";
 		blackSquareTextureLoc = "Textures/blackSquareWood.jpg";
 	}
-	else
+	else if (color == 1)
 	{
 		whitePieceTextureLoc = "Textures/plainRed.png";
 		blackPieceTextureLoc = "Textures/plainBrown.png";
@@ -51,9 +51,8 @@ Gameplay::Gameplay(Window* window, unsigned int* n, unsigned int color)
 	{
 		camera = Camera(glm::vec3(0.0f, 7.0f, 11.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, -32.0f);
 
-		playerTexture = Texture("Textures/plainRed.png");
-		opponentTexture = Texture("Textures/plainBrown.png");
-
+		playerTexture = Texture(whitePieceTextureLoc);
+		opponentTexture = Texture(blackPieceTextureLoc);
 
 		activeSquareIndex = 0;
 	}

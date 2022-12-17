@@ -49,6 +49,7 @@ public:
 			}
 			if (n == 1)
 			{
+				printf("%d", color);
 				Gameplay* gameplay = new Gameplay(&mainWindow, &n, color);
 				gameplay->Run();
 				delete gameplay;
@@ -59,7 +60,7 @@ public:
 				settings->Run();
 				delete settings;
 			}
-			if (n > 2)
+			if (n > 1)
 			{
 				break;
 			}
