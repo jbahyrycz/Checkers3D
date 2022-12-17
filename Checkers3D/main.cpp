@@ -22,6 +22,7 @@
 #include "Checkerboard.h"
 #include "Gameplay.h"
 #include "Menu.h"
+#include "Settings.h"
 
 class App
 {
@@ -36,6 +37,7 @@ public:
 		mainWindow.Initialize();
 
 		unsigned int n = 0;
+		unsigned int color = 0;
 
 		while (!mainWindow.GetShouldClose())
 		{
@@ -47,11 +49,17 @@ public:
 			}
 			if (n == 1)
 			{
-				Gameplay* gameplay = new Gameplay(&mainWindow, &n);
+				Gameplay* gameplay = new Gameplay(&mainWindow, &n, color);
 				gameplay->Run();
 				delete gameplay;
 			}
-			if (n > 1)
+			if (n == 2)
+			{
+				Settings* settings = new Settings(&mainWindow, &n, &color);
+				settings->Run();
+				delete settings;
+			}
+			if (n > 2)
 			{
 				break;
 			}

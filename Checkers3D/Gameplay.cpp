@@ -3,7 +3,7 @@
 const char* Gameplay::vShader = "Shaders/shaderGameplay.vert";
 const char* Gameplay::fShader = "Shaders/shaderGameplay.frag";
 
-Gameplay::Gameplay(Window* window, unsigned int* n)
+Gameplay::Gameplay(Window* window, unsigned int* n, unsigned int color)
 {
 	srand(time(NULL)); //wlaczenie losowosci
 
@@ -32,14 +32,34 @@ Gameplay::Gameplay(Window* window, unsigned int* n)
 	checkerboard = Checkerboard(white);
 	chosenPieceIndex = 0;
 
+	if (color == 0)
+	{
+		whitePieceTextureLoc = "Textures/plainWhite.jpg";
+		blackPieceTextureLoc = "Textures/plainBlack.jpg";
+		whiteSquareTextureLoc = "Textures/whiteSquareWood.jpg";
+		blackSquareTextureLoc = "Textures/blackSquareWood.jpg";
+	}
+	else
+	{
+		whitePieceTextureLoc = "Textures/plainRed.png";
+		blackPieceTextureLoc = "Textures/plainBrown.png";
+		whiteSquareTextureLoc = "Textures/whiteSquareWood.jpg";
+		blackSquareTextureLoc = "Textures/blackSquareWood.jpg";
+	}
+
 	if (white)
 	{
 		camera = Camera(glm::vec3(0.0f, 7.0f, 11.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, -32.0f);
 
+<<<<<<< HEAD
 
 
 		playerTexture = Texture("Textures/plainRed.png");
 		opponentTexture = Texture("Textures/plainBrown.png");
+=======
+		playerTexture = Texture(whitePieceTextureLoc);
+		opponentTexture = Texture(blackPieceTextureLoc);
+>>>>>>> a44bd8822b77abccf343caba8d553c4aab9fbb2b
 
 		activeSquareIndex = 0;
 	}
@@ -47,8 +67,8 @@ Gameplay::Gameplay(Window* window, unsigned int* n)
 	{
 		camera = Camera(glm::vec3(0.0f, 7.0f, -11.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, -32.0f);
 
-		playerTexture = Texture("Textures/plainBrown.png");
-		opponentTexture = Texture("Textures/plainRed.png");
+		playerTexture = Texture(blackPieceTextureLoc);
+		opponentTexture = Texture(whitePieceTextureLoc);
 
 		activeSquareIndex = 31;
 	}
