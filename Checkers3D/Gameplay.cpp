@@ -51,15 +51,9 @@ Gameplay::Gameplay(Window* window, unsigned int* n, unsigned int color)
 	{
 		camera = Camera(glm::vec3(0.0f, 7.0f, 11.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, -32.0f);
 
-<<<<<<< HEAD
-
-
 		playerTexture = Texture("Textures/plainRed.png");
 		opponentTexture = Texture("Textures/plainBrown.png");
-=======
-		playerTexture = Texture(whitePieceTextureLoc);
-		opponentTexture = Texture(blackPieceTextureLoc);
->>>>>>> a44bd8822b77abccf343caba8d553c4aab9fbb2b
+
 
 		activeSquareIndex = 0;
 	}
