@@ -19,7 +19,7 @@ public:
 	Checkerboard();
 	Checkerboard(bool white);
 
-	void MovePlayerPiece(int pieceIndex, int squareIndex);
+	bool MovePlayerPiece(int pieceIndex, int squareIndex);
 	void MoveOpponentPiece(int pieceIndex, int squareIndex);
 
 	void Capture(Piece* piece);

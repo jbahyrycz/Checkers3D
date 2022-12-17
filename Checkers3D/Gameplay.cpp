@@ -36,6 +36,8 @@ Gameplay::Gameplay(Window* window, unsigned int* n)
 	{
 		camera = Camera(glm::vec3(0.0f, 7.0f, 11.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, -32.0f);
 
+
+
 		playerTexture = Texture("Textures/plainRed.png");
 		opponentTexture = Texture("Textures/plainBrown.png");
 
@@ -358,11 +360,15 @@ void Gameplay::KeyControl(bool* keys)
 			&& checkerboard.blackSquares[activeSquareIndex].playerPieceIndex == -1 //i aktywne pole jest puste
 			&& checkerboard.blackSquares[activeSquareIndex].opponentPieceIndex == -1)
 		{
-			checkerboard.MovePlayerPiece(chosenPieceIndex, activeSquareIndex);
+			bool move = false;
+			move = checkerboard.MovePlayerPiece(chosenPieceIndex, activeSquareIndex);
 			chosenPieceIndex = -1; // po ruchu zadna bierka nie jest juz wybrana
 			//checkerboard.Capture(&checkerboard.opponentPieces[(std::rand() % 11)]);
 
-			CalculateMove(); //komputer sie rusza
+			if (move == true)
+			{
+				CalculateMove(); //komputer sie rusza
+			}
 			//checkerboard.Capture(&checkerboard.playerPieces[(std::rand() % 11)]);
 		}
 
