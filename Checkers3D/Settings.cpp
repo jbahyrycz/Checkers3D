@@ -1,40 +1,42 @@
-#include "Menu.h"
+#include "Settings.h"
 
-const char* Menu::vShader = "Shaders/shaderMenu.vert";
-const char* Menu::fShader = "Shaders/shaderMenu.frag";
+const char* Settings::vShader = "Shaders/shaderMenu.vert";
+const char* Settings::fShader = "Shaders/shaderMenu.frag";
 
-Menu::Menu(Window* window, unsigned int* n)
+Settings::Settings(Window* window, unsigned int* n, unsigned int* color)
 {
 	windowPtr = window;
 	nPtr = n;
-	*nPtr = 1;
+	*nPtr = 0;
+
+	colorPtr = color;
 
 	uniformProjection = 0;
 	uniformModel = 0;
 
-	menuShouldClose = false;
+	settingsShouldClose = false;
 }
 
-void Menu::Run()
+void Settings::Run()
 {
 	CreateObjects();
 	CreateShaders();
 	glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), (GLfloat)windowPtr->GetBufferWidth() / windowPtr->GetBufferHeight(), 0.1f, 100.0f);
 	LoadTextures();
 
-	while (!menuShouldClose && !windowPtr->GetShouldClose())
+	while (!settingsShouldClose && !windowPtr->GetShouldClose())
 	{
 		glfwPollEvents();
 		KeyControl(windowPtr->GetKeys());
 		RenderPass(projectionMatrix);
-		DisplayMenu(uniformModel);
+		DisplaySettings(uniformModel);
 
 		glUseProgram(0);
 		windowPtr->SwapBuffers();
 	}
 }
 
-void Menu::CreateObjects()
+void Settings::CreateObjects()
 {
 	unsigned int buttonIndices[] = {
 		0, 1, 2,
@@ -53,14 +55,14 @@ void Menu::CreateObjects()
 	meshList.push_back(button);
 }
 
-void Menu::CreateShaders()
+void Settings::CreateShaders()
 {
 	Shader* shader1 = new Shader();
 	shader1->CreateFromFiles(vShader, fShader);
 	shaderList.push_back(*shader1);
 }
 
-void Menu::RenderPass(glm::mat4 projectionMatrix)
+void Settings::RenderPass(glm::mat4 projectionMatrix)
 {
 	shaderList[0].UseShader();
 	uniformModel = shaderList[0].GetModelLocation();
@@ -75,53 +77,50 @@ void Menu::RenderPass(glm::mat4 projectionMatrix)
 	glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 }
 
-void Menu::LoadTextures()
+void Settings::LoadTextures()
 {
-	menuTexture = Texture("Textures/menu.png");
-	menuTexture.LoadTexture();
+	settingsTexture = Texture("Textures/menuSettings.png");
+	settingsTexture.LoadTexture();
 
-	menuSelectedTexture = Texture("Textures/menuSelected.png");
-	menuSelectedTexture.LoadTexture();
+	settingsBlackAndWhiteTexture = Texture("Textures/settingsBlackAndWhite.png");
+	settingsBlackAndWhiteTexture.LoadTexture();
 
-	menuStartTexture = Texture("Textures/menuStart.png");
-	menuStartTexture.LoadTexture();
+	settingsBlackAndWhiteSelectedTexture = Texture("Textures/settingsBlackAndWhiteSelected.png");
+	settingsBlackAndWhiteSelectedTexture.LoadTexture();
 
-	menuStartSelectedTexture = Texture("Textures/menuStartSelected.png");
-	menuStartSelectedTexture.LoadTexture();
+	settingsBrownAndRedTexture = Texture("Textures/settingsBrownAndRed.png");
+	settingsBrownAndRedTexture.LoadTexture();
 
-	menuSettingsTexture = Texture("Textures/menuSettings.png");
-	menuSettingsTexture.LoadTexture();
+	settingsBrownAndRedSelectedTexture = Texture("Textures/settingsBrownAndRedSelected.png");
+	settingsBrownAndRedSelectedTexture.LoadTexture();
 
-	menuSettingsSelectedTexture = Texture("Textures/menuSettingsSelected.png");
-	menuSettingsSelectedTexture.LoadTexture();
+	settingsExitTexture = Texture("Textures/menuExit.png");
+	settingsExitTexture.LoadTexture();
 
-	menuExitTexture = Texture("Textures/menuExit.png");
-	menuExitTexture.LoadTexture();
-
-	menuExitSelectedTexture = Texture("Textures/menuExitSelected.png");
-	menuExitSelectedTexture.LoadTexture();
+	settingsExitSelectedTexture = Texture("Textures/menuExitSelected.png");
+	settingsExitSelectedTexture.LoadTexture();
 }
 
-void Menu::DisplayMenu(GLuint uniformModel)
+void Settings::DisplaySettings(GLuint uniformModel)
 {
 	glm::mat4 model(1.0f);
 	model = glm::translate(model, glm::vec3(0.0f, 0.3f, 0.0f));
 	model = glm::scale(model, glm::vec3(0.05f, 0.05f, 1.0f));
 	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-	menuTexture.UseTexture();
+	settingsTexture.UseTexture();
 	meshList[0]->RenderMesh();
 
 	model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(0.0f, 0.1f, 0.0f));
 	model = glm::scale(model, glm::vec3(0.05f, 0.05f, 1.0f));
 	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-	if (*nPtr == 1)
+	if (*nPtr == 0)
 	{
-		menuStartSelectedTexture.UseTexture();
+		settingsBlackAndWhiteSelectedTexture.UseTexture();
 	}
 	else
 	{
-		menuStartTexture.UseTexture();
+		settingsBlackAndWhiteTexture.UseTexture();
 	}
 	meshList[0]->RenderMesh();
 
@@ -129,13 +128,13 @@ void Menu::DisplayMenu(GLuint uniformModel)
 	model = glm::translate(model, glm::vec3(0.0f, -0.1f, 0.0f));
 	model = glm::scale(model, glm::vec3(0.05f, 0.05f, 1.0f));
 	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-	if (*nPtr == 2)
+	if (*nPtr == 1)
 	{
-		menuSettingsSelectedTexture.UseTexture();
+		settingsBrownAndRedSelectedTexture.UseTexture();
 	}
 	else
 	{
-		menuSettingsTexture.UseTexture();
+		settingsBrownAndRedTexture.UseTexture();
 	}
 	meshList[0]->RenderMesh();
 
@@ -143,30 +142,38 @@ void Menu::DisplayMenu(GLuint uniformModel)
 	model = glm::translate(model, glm::vec3(0.0f, -0.3f, 0.0f));
 	model = glm::scale(model, glm::vec3(0.05f, 0.05f, 1.0f));
 	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-	if (*nPtr == 3)
+	if (*nPtr == 2)
 	{
-		menuExitSelectedTexture.UseTexture();
+		settingsExitSelectedTexture.UseTexture();
 	}
 	else
 	{
-		menuExitTexture.UseTexture();
+		settingsExitTexture.UseTexture();
 	}
 	meshList[0]->RenderMesh();
 }
 
-void Menu::KeyControl(bool* keys)
+void Settings::KeyControl(bool* keys)
 {
 	if (keys[GLFW_KEY_ENTER])
 	{
-		menuShouldClose = true;
+		if (*nPtr == 2)
+		{
+			*nPtr = 0;
+			settingsShouldClose = true;
+		}
+		else
+		{
+			*colorPtr = *nPtr;
+		}
 
 		keys[GLFW_KEY_ENTER] = false;
 	}
 	if (keys[GLFW_KEY_ESCAPE])
 	{
-		*nPtr = 3;
-		menuShouldClose = true;
-
+		*nPtr = 0;
+		settingsShouldClose = true;
+		
 		keys[GLFW_KEY_ESCAPE] = false;
 	}
 	if (keys[GLFW_KEY_UP] && *nPtr > 1)
@@ -183,7 +190,7 @@ void Menu::KeyControl(bool* keys)
 	}
 }
 
-Menu::~Menu()
+Settings::~Settings()
 {
 
 }

@@ -11,10 +11,10 @@
 #include "Shader.h"
 #include "Texture.h"
 
-class Menu
+class Settings
 {
 public:
-	Menu(Window* mainWindow, unsigned int* n);
+	Settings(Window* mainWindow, unsigned int* n, unsigned int* color);
 
 	void Run();
 
@@ -22,14 +22,15 @@ public:
 	void CreateShaders();
 	void RenderPass(glm::mat4 projectionMatrix);
 	void LoadTextures();
-	void DisplayMenu(GLuint uniformModel);
+	void DisplaySettings(GLuint uniformModel);
 	void KeyControl(bool* keys);
 
-	~Menu();
+	~Settings();
 
 private:
 	Window* windowPtr;
 	unsigned int* nPtr;
+	unsigned int* colorPtr;
 
 	GLuint uniformProjection;
 	GLuint uniformModel;
@@ -40,14 +41,13 @@ private:
 	static const char* vShader;
 	static const char* fShader;
 
-	Texture menuTexture;
-	Texture menuSelectedTexture;
-	Texture menuStartTexture;
-	Texture menuStartSelectedTexture;
-	Texture menuSettingsTexture;
-	Texture menuSettingsSelectedTexture;
-	Texture menuExitTexture;
-	Texture menuExitSelectedTexture;
+	Texture settingsTexture;
+	Texture settingsBlackAndWhiteTexture;
+	Texture settingsBlackAndWhiteSelectedTexture;
+	Texture settingsBrownAndRedTexture;
+	Texture settingsBrownAndRedSelectedTexture;
+	Texture settingsExitTexture;
+	Texture settingsExitSelectedTexture;
 
-	bool menuShouldClose;
+	bool settingsShouldClose;
 };

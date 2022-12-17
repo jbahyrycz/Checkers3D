@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include <ctime>
 #include <vector>
 
@@ -19,7 +21,7 @@
 class Gameplay
 {
 public:
-	Gameplay(Window* widndow, unsigned int* n);
+	Gameplay(Window* widndow, unsigned int* n, unsigned int color); // color: 0 - black/white, 1 - brown/red
 
 	void Run();
 
@@ -48,6 +50,11 @@ private:
 	std::vector<Shader> shaderList;
 
 	Camera camera;
+
+	const char* whitePieceTextureLoc;
+	const char* blackPieceTextureLoc;
+	const char* whiteSquareTextureLoc;
+	const char* blackSquareTextureLoc;
 
 	Texture playerTexture;
 	Texture opponentTexture;

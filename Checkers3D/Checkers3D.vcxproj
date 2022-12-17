@@ -143,6 +143,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Piece.h" />
     <ClInclude Include="PointLight.h" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="Texture.h" />
