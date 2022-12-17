@@ -49,7 +49,6 @@ public:
 			}
 			if (n == 1)
 			{
-				printf("%d", color);
 				Gameplay* gameplay = new Gameplay(&mainWindow, &n, color);
 				gameplay->Run();
 				delete gameplay;
