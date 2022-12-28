@@ -3,7 +3,7 @@
 const char* Gameplay::vShader = "Shaders/shaderGameplay.vert";
 const char* Gameplay::fShader = "Shaders/shaderGameplay.frag";
 
-Gameplay::Gameplay(Window* window, unsigned int* n, unsigned int color)
+Gameplay::Gameplay(Window* window, unsigned int* n, unsigned int style)
 {
 	srand(time(NULL)); //wlaczenie losowosci
 
@@ -32,14 +32,14 @@ Gameplay::Gameplay(Window* window, unsigned int* n, unsigned int color)
 	checkerboard = Checkerboard(white);
 	chosenPieceIndex = 0;
 
-	if (color == 0)
+	if (style == 0)
 	{
 		whitePieceTextureLoc = "Textures/plainWhite.jpg";
 		blackPieceTextureLoc = "Textures/plainBlack.jpg";
 		whiteSquareTextureLoc = "Textures/whiteSquareWood.jpg";
 		blackSquareTextureLoc = "Textures/blackSquareWood.jpg";
 	}
-	else if (color == 1)
+	else if (style == 1)
 	{
 		whitePieceTextureLoc = "Textures/plainRed.png";
 		blackPieceTextureLoc = "Textures/plainBrown.png";

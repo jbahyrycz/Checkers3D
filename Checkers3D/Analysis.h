@@ -21,7 +21,7 @@
 class Analysis
 {
 public:
-	Analysis(Window* widndow, unsigned int* n, unsigned int color); // color: 0 - black/white, 1 - brown/red
+	Analysis(Window* widndow, unsigned int* n, unsigned int style); // style: 0 - black/white, 1 - brown/red
 
 	void Run();
 

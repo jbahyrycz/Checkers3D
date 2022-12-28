@@ -3,7 +3,7 @@
 const char* Analysis::vShader = "Shaders/shaderGameplay.vert";
 const char* Analysis::fShader = "Shaders/shaderGameplay.frag";
 
-Analysis::Analysis(Window* window, unsigned int* n, unsigned int color)
+Analysis::Analysis(Window* window, unsigned int* n, unsigned int style)
 {
 	srand(time(NULL)); //wlaczenie losowosci
 
@@ -25,21 +25,22 @@ Analysis::Analysis(Window* window, unsigned int* n, unsigned int color)
 		0.0f, 5.0f, 0.0f,
 		0.05f, 0.03f, 0.02f);
 
-	white = (std::rand() % 2);
+	//white = (std::rand() % 2);
+	white = false;
 
 	analysisShouldClose = false;
 
 	checkerboard = Checkerboard(white);
 	chosenPieceIndex = 0;
 
-	if (color == 0)
+	if (style == 0)
 	{
 		whitePieceTextureLoc = "Textures/plainWhite.jpg";
 		blackPieceTextureLoc = "Textures/plainBlack.jpg";
 		whiteSquareTextureLoc = "Textures/whiteSquareWood.jpg";
 		blackSquareTextureLoc = "Textures/blackSquareWood.jpg";
 	}
-	else if (color == 1)
+	else if (style == 1)
 	{
 		whitePieceTextureLoc = "Textures/plainRed.png";
 		blackPieceTextureLoc = "Textures/plainBrown.png";
@@ -49,7 +50,7 @@ Analysis::Analysis(Window* window, unsigned int* n, unsigned int color)
 
 	if (white)
 	{
-		camera = Camera(glm::vec3(0.0f, 7.0f, 11.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, -32.0f);
+		camera = Camera(glm::vec3(0.0f, 12.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, -90.0f);
 
 		playerTexture = Texture(whitePieceTextureLoc);
 		opponentTexture = Texture(blackPieceTextureLoc);
@@ -58,7 +59,7 @@ Analysis::Analysis(Window* window, unsigned int* n, unsigned int color)
 	}
 	else
 	{
-		camera = Camera(glm::vec3(0.0f, 7.0f, -11.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, -32.0f);
+		camera = Camera(glm::vec3(0.0f, 12.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, -90.0f);
 
 		playerTexture = Texture(blackPieceTextureLoc);
 		opponentTexture = Texture(whitePieceTextureLoc);

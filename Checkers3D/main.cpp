@@ -40,7 +40,7 @@ public:
 		mainWindow.Initialize();
 
 		unsigned int n = 0;
-		unsigned int color = 0;
+		unsigned int style = 0;
 
 		while (!mainWindow.GetShouldClose())
 		{
@@ -52,19 +52,19 @@ public:
 			}
 			if (n == 1)
 			{
-				Gameplay* gameplay = new Gameplay(&mainWindow, &n, color);
+				Gameplay* gameplay = new Gameplay(&mainWindow, &n, style);
 				gameplay->Run();
 				delete gameplay;
 			}
 			if (n == 2)
 			{
-				Analysis* analysis = new Analysis(&mainWindow, &n, color);
+				Analysis* analysis = new Analysis(&mainWindow, &n, style);
 				analysis->Run();
 				delete analysis;
 			}
 			if (n == 3)
 			{
-				Settings* settings = new Settings(&mainWindow, &n, &color);
+				Settings* settings = new Settings(&mainWindow, &n, &style);
 				settings->Run();
 				delete settings;
 			}

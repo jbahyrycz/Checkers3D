@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
 
 #include <ctime>
 #include <vector>
@@ -21,7 +22,7 @@
 class Gameplay
 {
 public:
-	Gameplay(Window* widndow, unsigned int* n, unsigned int color); // color: 0 - black/white, 1 - brown/red
+	Gameplay(Window* widndow, unsigned int* n, unsigned int style); // style: 0 - black/white, 1 - brown/red
 
 	void Run();
 
