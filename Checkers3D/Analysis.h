@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
 
 #include <ctime>
 #include <vector>
@@ -42,6 +43,8 @@ private:
 	std::vector<Mesh*> meshList;
 	std::vector<Shader> shaderList;
 
+	std::vector<unsigned int> moveList;
+
 	Camera camera;
 
 	const char* whitePieceTextureLoc;
@@ -72,8 +75,8 @@ private:
 
 	Checkerboard checkerboard;
 
-	unsigned int activeSquareIndex;
-	unsigned int chosenPieceIndex;
+	int indexCounter;
+	unsigned int go; // 1 - ruch bialych, 0 - ruch czarnych
 
 	bool white;
 	bool analysisShouldClose;

@@ -25,13 +25,50 @@ Analysis::Analysis(Window* window, unsigned int* n, unsigned int style)
 		0.0f, 5.0f, 0.0f,
 		0.05f, 0.03f, 0.02f);
 
-	//white = (std::rand() % 2);
-	white = false;
+	std::ifstream file("data.txt");
+	char c;
+	int firstNum = -2;
+	int secondNum = -1;
+	while (!file.eof()) {
+		file.get(c);
+		if (firstNum == -2)
+		{
+			firstNum = c - 48;
+			white = firstNum;
+			go = white;
+			moveList.push_back(firstNum);
+			firstNum = -1;
+		}
+		else if (c != 32 && c != 10)
+		{
+			if (firstNum == -1)
+			{
+				firstNum = c - 48;
+			}
+			else if (secondNum == -1)
+			{
+				secondNum = c - 48;
+				moveList.push_back(firstNum*10 + secondNum);
+				firstNum = -1;
+				secondNum = -1;
+			}
+		}
+		std::cout << c;
+	}
+	file.close();
+
+	for (int i = 0; i < moveList.size(); i++)
+	{
+		std::cout << moveList[i] << std::endl;
+	}
+
+	file.close();
 
 	analysisShouldClose = false;
 
+	indexCounter = -1;
+
 	checkerboard = Checkerboard(white);
-	chosenPieceIndex = 0;
 
 	if (style == 0)
 	{
@@ -54,8 +91,6 @@ Analysis::Analysis(Window* window, unsigned int* n, unsigned int style)
 
 		playerTexture = Texture(whitePieceTextureLoc);
 		opponentTexture = Texture(blackPieceTextureLoc);
-
-		activeSquareIndex = 0;
 	}
 	else
 	{
@@ -63,8 +98,6 @@ Analysis::Analysis(Window* window, unsigned int* n, unsigned int style)
 
 		playerTexture = Texture(blackPieceTextureLoc);
 		opponentTexture = Texture(whitePieceTextureLoc);
-
-		activeSquareIndex = 31;
 	}
 
 	whiteSquareTexture = Texture("Textures/whiteSquareWood.jpg");
@@ -352,6 +385,26 @@ void Analysis::KeyControl(bool* keys)
 		*nPtr = 0;
 
 		keys[GLFW_KEY_ESCAPE] = false;
+	}
+	if (keys[GLFW_KEY_RIGHT])
+	{
+		indexCounter += 2;
+		if (go == 1)
+		{
+			checkerboard.MovePlayerPiece(moveList[indexCounter], moveList[indexCounter + 1]);
+			go -= 1;
+		}
+		else if (go == 0)
+		{
+			checkerboard.MoveOpponentPiece(moveList[indexCounter], moveList[indexCounter + 1]);
+			go -= 1;
+		}
+		keys[GLFW_KEY_RIGHT] = false;
+	}
+	if (keys[GLFW_KEY_LEFT])
+	{
+		
+		keys[GLFW_KEY_LEFT] = false;
 	}
 }
 

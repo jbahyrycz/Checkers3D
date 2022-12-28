@@ -10,6 +10,8 @@ Gameplay::Gameplay(Window* window, unsigned int* n, unsigned int style)
 	windowPtr = window;
 	nPtr = n;
 
+	std::ofstream save("data.txt");
+
 	uniformProjection = 0;
 	uniformModel = 0;
 	uniformView = 0;
@@ -26,6 +28,9 @@ Gameplay::Gameplay(Window* window, unsigned int* n, unsigned int style)
 					0.05f, 0.03f, 0.02f);
 
 	white = (std::rand() % 2);
+
+	save << white; //pierwsza linijka pliku mowi o kolorze bierek gracza
+	save.close();
 
 	gameplayShouldClose = false;
 
@@ -379,6 +384,20 @@ void Gameplay::KeyControl(bool* keys)
 
 			if (move == true)
 			{
+				std::ofstream save;
+				save.open("data.txt", std::ios::app);
+				if (chosenPieceIndex < 10)
+				{
+					save << "0";
+				}
+				save << chosenPieceIndex;
+				if (activeSquareIndex < 10)
+				{
+					save << "0";
+				}
+				save << activeSquareIndex;
+				save.close();
+
 				CalculateMove(); //komputer sie rusza
 				chosenPieceIndex = -1; // po ruchu zadna bierka nie jest juz wybrana
 			}
@@ -450,6 +469,19 @@ void Gameplay::CalculateMove()
 		&& checkerboard.opponentPieces[pieceIndex].captured == false) //i wybrana bierka nie jest zbita
 	{
 		checkerboard.MoveOpponentPiece(pieceIndex, squareIndex); //rusz sie losowa bierka
+		std::ofstream save;
+		save.open("data.txt", std::ios::app);
+		if (pieceIndex < 10)
+		{
+			save << "0";
+		}
+		save << pieceIndex;
+		if (squareIndex < 10)
+		{
+			save << "0";
+		}
+		save << squareIndex << std::endl;
+		save.close();
 	}
 	else
 	{
