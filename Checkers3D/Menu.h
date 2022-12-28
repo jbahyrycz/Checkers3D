@@ -44,6 +44,8 @@ private:
 	Texture menuSelectedTexture;
 	Texture menuStartTexture;
 	Texture menuStartSelectedTexture;
+	Texture menuAnalysisTexture;
+	Texture menuAnalysisSelectedTexture;
 	Texture menuSettingsTexture;
 	Texture menuSettingsSelectedTexture;
 	Texture menuExitTexture;

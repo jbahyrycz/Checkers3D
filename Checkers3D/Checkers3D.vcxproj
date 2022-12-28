@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Analysis.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Checkerboard.cpp" />
     <ClCompile Include="Gameplay.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Analysis.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Checkerboard.h" />
     <ClInclude Include="Gameplay.h" />

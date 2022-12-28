@@ -55,11 +55,16 @@ public:
 			}
 			if (n == 2)
 			{
+				printf("Analysis\n");
+				n = 0;
+			}
+			if (n == 3)
+			{
 				Settings* settings = new Settings(&mainWindow, &n, &color);
 				settings->Run();
 				delete settings;
 			}
-			if (n > 1)
+			if (n > 3)
 			{
 				break;
 			}

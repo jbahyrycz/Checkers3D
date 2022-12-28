@@ -89,6 +89,12 @@ void Menu::LoadTextures()
 	menuStartSelectedTexture = Texture("Textures/menuStartSelected.png");
 	menuStartSelectedTexture.LoadTexture();
 
+	menuAnalysisTexture = Texture("Textures/menuAnalysis.png");
+	menuAnalysisTexture.LoadTexture();
+
+	menuAnalysisSelectedTexture = Texture("Textures/menuAnalysisSelected.png");
+	menuAnalysisSelectedTexture.LoadTexture();
+
 	menuSettingsTexture = Texture("Textures/menuSettings.png");
 	menuSettingsTexture.LoadTexture();
 
@@ -106,14 +112,14 @@ void Menu::DisplayMenu(GLuint uniformModel)
 {
 	glm::mat4 model(1.0f);
 	model = glm::translate(model, glm::vec3(0.0f, 0.3f, 0.0f));
-	model = glm::scale(model, glm::vec3(0.05f, 0.05f, 1.0f));
+	model = glm::scale(model, glm::vec3(0.04f, 0.04f, 1.0f));
 	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 	menuTexture.UseTexture();
 	meshList[0]->RenderMesh();
 
 	model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, 0.1f, 0.0f));
-	model = glm::scale(model, glm::vec3(0.05f, 0.05f, 1.0f));
+	model = glm::translate(model, glm::vec3(0.0f, 0.15f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.04f, 0.04f, 1.0f));
 	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 	if (*nPtr == 1)
 	{
@@ -126,10 +132,24 @@ void Menu::DisplayMenu(GLuint uniformModel)
 	meshList[0]->RenderMesh();
 
 	model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, -0.1f, 0.0f));
-	model = glm::scale(model, glm::vec3(0.05f, 0.05f, 1.0f));
+	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.04f, 0.04f, 1.0f));
 	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 	if (*nPtr == 2)
+	{
+		menuAnalysisSelectedTexture.UseTexture();
+	}
+	else
+	{
+		menuAnalysisTexture.UseTexture();
+	}
+	meshList[0]->RenderMesh();
+
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, -0.15f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.04f, 0.04f, 1.0f));
+	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+	if (*nPtr == 3)
 	{
 		menuSettingsSelectedTexture.UseTexture();
 	}
@@ -141,9 +161,9 @@ void Menu::DisplayMenu(GLuint uniformModel)
 
 	model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(0.0f, -0.3f, 0.0f));
-	model = glm::scale(model, glm::vec3(0.05f, 0.05f, 1.0f));
+	model = glm::scale(model, glm::vec3(0.04f, 0.04f, 1.0f));
 	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-	if (*nPtr == 3)
+	if (*nPtr == 4)
 	{
 		menuExitSelectedTexture.UseTexture();
 	}
@@ -164,7 +184,7 @@ void Menu::KeyControl(bool* keys)
 	}
 	if (keys[GLFW_KEY_ESCAPE])
 	{
-		*nPtr = 3;
+		*nPtr = 4;
 		menuShouldClose = true;
 
 		keys[GLFW_KEY_ESCAPE] = false;
@@ -175,7 +195,7 @@ void Menu::KeyControl(bool* keys)
 
 		keys[GLFW_KEY_UP] = false;
 	}
-	if (keys[GLFW_KEY_DOWN] && *nPtr < 3)
+	if (keys[GLFW_KEY_DOWN] && *nPtr < 4)
 	{
 		*nPtr += 1;
 
