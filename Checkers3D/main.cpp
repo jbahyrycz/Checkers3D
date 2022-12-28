@@ -23,6 +23,9 @@
 #include "Gameplay.h"
 #include "Menu.h"
 #include "Settings.h"
+#include "Analysis.h"
+
+// komentarz testowy
 
 class App
 {
@@ -55,8 +58,9 @@ public:
 			}
 			if (n == 2)
 			{
-				printf("Analysis\n");
-				n = 0;
+				Analysis* analysis = new Analysis(&mainWindow, &n, color);
+				analysis->Run();
+				delete analysis;
 			}
 			if (n == 3)
 			{

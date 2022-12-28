@@ -10,11 +10,13 @@
 #include "Piece.h"
 
 class Gameplay;
+class Analysis;
 
 class Checkerboard
 {
 public:
 	friend class Gameplay;
+	friend class Analysis;
 
 	Checkerboard();
 	Checkerboard(bool white);

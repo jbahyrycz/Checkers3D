@@ -2,12 +2,14 @@
 
 class Checkerboard;
 class Gameplay;
+class Analysis;
 
 class Square
 {
 public:
 	friend class Checkerboard;
 	friend class Gameplay;
+	friend class Analysis;
 
 	Square();
 
