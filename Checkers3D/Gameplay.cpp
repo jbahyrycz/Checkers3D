@@ -10,8 +10,6 @@ Gameplay::Gameplay(Window* window, unsigned int* n, unsigned int style)
 	windowPtr = window;
 	nPtr = n;
 
-	std::ofstream save("data.txt");
-
 	uniformProjection = 0;
 	uniformModel = 0;
 	uniformView = 0;
@@ -29,8 +27,13 @@ Gameplay::Gameplay(Window* window, unsigned int* n, unsigned int style)
 
 	white = (std::rand() % 2);
 
-	save << white; //pierwsza linijka pliku mowi o kolorze bierek gracza
-	save.close();
+	std::ofstream movesSave("moves.txt");
+	movesSave << white; //pierwsza linijka pliku mowi o kolorze bierek gracza
+	movesSave.close();
+
+	std::ofstream orderSave("order.txt");
+	orderSave << "";
+	orderSave.close();
 
 	gameplayShouldClose = false;
 
@@ -384,19 +387,24 @@ void Gameplay::KeyControl(bool* keys)
 
 			if (move == true)
 			{
-				std::ofstream save;
-				save.open("data.txt", std::ios::app);
+				std::ofstream movesSave;
+				movesSave.open("moves.txt", std::ios::app);
 				if (chosenPieceIndex < 10)
 				{
-					save << "0";
+					movesSave << "0";
 				}
-				save << chosenPieceIndex;
+				movesSave << chosenPieceIndex;
 				if (activeSquareIndex < 10)
 				{
-					save << "0";
+					movesSave << "0";
 				}
-				save << activeSquareIndex;
-				save.close();
+				movesSave << activeSquareIndex;
+				movesSave.close();
+
+				std::ofstream orderSave;
+				orderSave.open("order.txt", std::ios::app);
+				orderSave << "1"; // ruszyl sie gracz
+				orderSave.close();
 
 				CalculateMove(); //komputer sie rusza
 				chosenPieceIndex = -1; // po ruchu zadna bierka nie jest juz wybrana
@@ -469,19 +477,24 @@ void Gameplay::CalculateMove()
 		&& checkerboard.opponentPieces[pieceIndex].captured == false) //i wybrana bierka nie jest zbita
 	{
 		checkerboard.MoveOpponentPiece(pieceIndex, squareIndex); //rusz sie losowa bierka
-		std::ofstream save;
-		save.open("data.txt", std::ios::app);
+		std::ofstream movesSave;
+		movesSave.open("moves.txt", std::ios::app);
 		if (pieceIndex < 10)
 		{
-			save << "0";
+			movesSave << "0";
 		}
-		save << pieceIndex;
+		movesSave << pieceIndex;
 		if (squareIndex < 10)
 		{
-			save << "0";
+			movesSave << "0";
 		}
-		save << squareIndex << std::endl;
-		save.close();
+		movesSave << squareIndex << std::endl;
+		movesSave.close();
+
+		std::ofstream orderSave;
+		orderSave.open("order.txt", std::ios::app);
+		orderSave << "0"; // ruszyl sie komputer
+		orderSave.close();
 	}
 	else
 	{

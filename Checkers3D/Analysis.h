@@ -44,6 +44,7 @@ private:
 	std::vector<Shader> shaderList;
 
 	std::vector<unsigned int> moveList;
+	std::vector<unsigned int> orderList;
 
 	Camera camera;
 
@@ -75,7 +76,8 @@ private:
 
 	Checkerboard checkerboard;
 
-	int indexCounter;
+	int movesIndexCounter;
+	int orderIndexCounter;
 	unsigned int go; // 1 - ruch bialych, 0 - ruch czarnych
 
 	bool white;

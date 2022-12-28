@@ -25,12 +25,12 @@ Analysis::Analysis(Window* window, unsigned int* n, unsigned int style)
 		0.0f, 5.0f, 0.0f,
 		0.05f, 0.03f, 0.02f);
 
-	std::ifstream file("data.txt");
+	std::ifstream movesFile("moves.txt");
 	char c;
 	int firstNum = -2;
 	int secondNum = -1;
-	while (!file.eof()) {
-		file.get(c);
+	while (!movesFile.eof()) {
+		movesFile.get(c);
 		if (firstNum == -2)
 		{
 			firstNum = c - 48;
@@ -55,18 +55,31 @@ Analysis::Analysis(Window* window, unsigned int* n, unsigned int style)
 		}
 		std::cout << c;
 	}
-	file.close();
+	movesFile.close();
 
 	for (int i = 0; i < moveList.size(); i++)
 	{
 		std::cout << moveList[i] << std::endl;
 	}
 
-	file.close();
+	std::ifstream orderFile("order.txt");
+	while (!orderFile.eof())
+	{
+		orderFile.get(c);
+		orderList.push_back(c - 48);
+		std::cout << c;
+	}
+	orderFile.close();
+
+	for (int i = 0; i < orderList.size(); i++)
+	{
+		std::cout << orderList[i] << std::endl;
+	}
 
 	analysisShouldClose = false;
 
-	indexCounter = -1;
+	movesIndexCounter = -1;
+	orderIndexCounter = -1;
 
 	checkerboard = Checkerboard(white);
 
@@ -388,17 +401,23 @@ void Analysis::KeyControl(bool* keys)
 	}
 	if (keys[GLFW_KEY_RIGHT])
 	{
-		indexCounter += 2;
-		if (go == 1)
+		printf("size: %d\n", orderList.size());
+		printf("index: %d\n", orderIndexCounter);
+		if ((int)orderList.size() > orderIndexCounter + 2)
 		{
-			checkerboard.MovePlayerPiece(moveList[indexCounter], moveList[indexCounter + 1]);
-			go -= 1;
+			orderIndexCounter += 1;
+			movesIndexCounter += 2;
+
+			if (orderList[orderIndexCounter] == 1)
+			{
+				checkerboard.MovePlayerPiece(moveList[movesIndexCounter], moveList[movesIndexCounter + 1]);
+			}
+			else if (orderList[orderIndexCounter] == 0)
+			{
+				checkerboard.MoveOpponentPiece(moveList[movesIndexCounter], moveList[movesIndexCounter + 1]);
+			}
 		}
-		else if (go == 0)
-		{
-			checkerboard.MoveOpponentPiece(moveList[indexCounter], moveList[indexCounter + 1]);
-			go -= 1;
-		}
+
 		keys[GLFW_KEY_RIGHT] = false;
 	}
 	if (keys[GLFW_KEY_LEFT])
