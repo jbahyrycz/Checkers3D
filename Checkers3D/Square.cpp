@@ -20,22 +20,7 @@ void Square::SetPosition(float x, float z)
 	posZ = z;
 }
 
-Square::~Square()
-{
-
-}
-
-void Square::setcolor(bool a)
-{
-	color = a;
-}
-
-bool Square::getcolor()
-{
-	return color;
-}
-
-bool Square::isempty()
+bool Square::IsEmpty()
 {
 	if (playerPieceIndex == -1 && opponentPieceIndex == -1)
 	{
@@ -47,15 +32,7 @@ bool Square::isempty()
 	}
 }
 
-float Square::getposX()
+Square::~Square()
 {
-	return posX;
-}
-float Square::getposY()
-{
-	return posY;
-}
-float Square::getposZ()
-{
-	return posZ;
+
 }

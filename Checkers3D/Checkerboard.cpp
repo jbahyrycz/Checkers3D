@@ -43,7 +43,7 @@ Checkerboard::Checkerboard(bool white)
 			//white pieces
 			blackSquares[i].playerPieceIndex = i; //przyisywanie bierki do pola
 			playerPieces[i].squareIndex = i; //przypisywanie pola do bierki
-			playerPieces[i].setcolor(1); //1-b 0-c
+			playerPieces[i].color = 1; //1-b 0-c
 			playerPieces[i].ChangePosition(blackSquares[i].posX, 0.6f, blackSquares[i].posZ); //ustawienie pozycji bierki
 			playerPieces[i].finalPosX = -3.5 + xOffset;
 			playerPieces[i].finalPosZ = -4.5f;
@@ -67,7 +67,7 @@ Checkerboard::Checkerboard(bool white)
 			//white pieces
 			blackSquares[i].opponentPieceIndex = i;
 			opponentPieces[i].squareIndex = i;
-			opponentPieces[i].setcolor(1); // 1-b 0-c 
+			opponentPieces[i].color = 1; // 1-b 0-c 
 			opponentPieces[i].ChangePosition(blackSquares[i].posX, 0.6f, blackSquares[i].posZ);
 			opponentPieces[i].finalPosX = -3.5 + xOffset;
 			opponentPieces[i].finalPosZ = -4.5f;
@@ -93,7 +93,7 @@ Checkerboard::Checkerboard(bool white)
 	for (int i = 0; i < 32; i++)
 	{
 		whiteSquares[i].SetPosition(-2.5f + xOffset, 3.5f - zOffset);
-		whiteSquares[i].setcolor(1);
+		whiteSquares[i].color = 1;
 
 		xOffset += 2.0f;
 
@@ -115,13 +115,13 @@ Checkerboard::Checkerboard(bool white)
 
 bool Checkerboard::MovePlayerPiece(int pieceIndex, int squareIndex)
 {
-	if (blackSquares[squareIndex].isempty() != true)
+	if (blackSquares[squareIndex].IsEmpty() != true)
 	{
-		if (abs(blackSquares[squareIndex].getposX() - blackSquares[playerPieces[pieceIndex].squareIndex].getposX()) == 1)
+		if (abs(blackSquares[squareIndex].posX - blackSquares[playerPieces[pieceIndex].squareIndex].posX) == 1)
 		{
-			if (playerPieces[pieceIndex].getcolor() == false)
+			if (playerPieces[pieceIndex].color == false)
 			{
-				if (blackSquares[squareIndex].getposZ() - blackSquares[playerPieces[pieceIndex].squareIndex].getposZ() == 1)
+				if (blackSquares[squareIndex].posZ - blackSquares[playerPieces[pieceIndex].squareIndex].posZ == 1)
 				{
 					blackSquares[playerPieces[pieceIndex].squareIndex].playerPieceIndex = -1;
 					blackSquares[squareIndex].playerPieceIndex = pieceIndex;
@@ -135,7 +135,7 @@ bool Checkerboard::MovePlayerPiece(int pieceIndex, int squareIndex)
 			}
 			else
 			{
-				if (blackSquares[squareIndex].getposZ() - blackSquares[playerPieces[pieceIndex].squareIndex].getposZ() == -1)
+				if (blackSquares[squareIndex].posZ - blackSquares[playerPieces[pieceIndex].squareIndex].posZ == -1)
 				{
 					blackSquares[playerPieces[pieceIndex].squareIndex].playerPieceIndex = -1;
 					blackSquares[squareIndex].playerPieceIndex = pieceIndex;
@@ -149,7 +149,7 @@ bool Checkerboard::MovePlayerPiece(int pieceIndex, int squareIndex)
 			}		
 		}	
 	}
-	playerPieces[pieceIndex].chosen = false;
+	//playerPieces[pieceIndex].chosen = false;
 	return false;
 }
 

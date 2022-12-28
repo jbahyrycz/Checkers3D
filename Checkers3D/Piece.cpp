@@ -30,28 +30,3 @@ Piece::~Piece()
 {
 
 }
-
-void Piece::setcolor(bool a) //1-b 0-c 
-{
-	color = a;
-}
-
-bool Piece::getcolor()
-{
-	return color;
-}
-
-float Piece::getposX()
-{
-	return posX;
-}
-
-float Piece::getposY()
-{
-	return posY;
-}
-
-float Piece::getposZ()
-{
-	return posZ;
-}

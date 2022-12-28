@@ -12,12 +12,6 @@ public:
 	Piece();
 	~Piece();
 
-	void setcolor(bool a); // 1-b 0-c
-	bool getcolor();
-	float getposX();
-	float getposY();
-	float getposZ();
-
 private:
 	void ChangePosition(float x, float y, float z);
 

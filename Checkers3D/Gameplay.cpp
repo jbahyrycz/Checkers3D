@@ -375,12 +375,12 @@ void Gameplay::KeyControl(bool* keys)
 		{
 			bool move = false;
 			move = checkerboard.MovePlayerPiece(chosenPieceIndex, activeSquareIndex);
-			chosenPieceIndex = -1; // po ruchu zadna bierka nie jest juz wybrana
 			//checkerboard.Capture(&checkerboard.opponentPieces[(std::rand() % 11)]);
 
 			if (move == true)
 			{
 				CalculateMove(); //komputer sie rusza
+				chosenPieceIndex = -1; // po ruchu zadna bierka nie jest juz wybrana
 			}
 			//checkerboard.Capture(&checkerboard.playerPieces[(std::rand() % 11)]);
 		}
