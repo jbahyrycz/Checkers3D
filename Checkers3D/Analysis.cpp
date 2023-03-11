@@ -53,28 +53,16 @@ Analysis::Analysis(Window* window, unsigned int* n, unsigned int style)
 				secondNum = -1;
 			}
 		}
-		std::cout << c;
 	}
 	movesFile.close();
-
-	for (int i = 0; i < moveList.size(); i++)
-	{
-		std::cout << moveList[i] << std::endl;
-	}
 
 	std::ifstream orderFile("order.txt");
 	while (!orderFile.eof())
 	{
 		orderFile.get(c);
 		orderList.push_back(c - 48);
-		std::cout << c;
 	}
 	orderFile.close();
-
-	for (int i = 0; i < orderList.size(); i++)
-	{
-		std::cout << orderList[i] << std::endl;
-	}
 
 	analysisShouldClose = false;
 
@@ -401,8 +389,6 @@ void Analysis::KeyControl(bool* keys)
 	}
 	if (keys[GLFW_KEY_RIGHT])
 	{
-		printf("size: %d\n", orderList.size());
-		printf("index: %d\n", orderIndexCounter);
 		if ((int)orderList.size() > orderIndexCounter + 2)
 		{
 			orderIndexCounter += 1;
